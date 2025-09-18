@@ -1,5 +1,4 @@
 <?php
-// Configurar las rutas correctamente
 $base_path = dirname(__DIR__);
 include_once $base_path . '/config/database.php';
 include_once $base_path . '/models/Accommodation.php';

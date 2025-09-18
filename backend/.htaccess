@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /alojamientos_app/backend/
+
+# Remover el prefijo /api/ si está presente
+RewriteRule ^api/(.*)$ $1 [L]
+
+# Redirigir todas las solicitudes a index.php (excepto archivos y directorios existentes)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Headers para CORS
+Header always set Access-Control-Allow-Origin "http://localhost:3000"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"

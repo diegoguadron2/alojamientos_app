@@ -1,5 +1,6 @@
 <?php
-class User {
+class User
+{
     private $conn;
     private $table_name = "users";
 
@@ -10,11 +11,13 @@ class User {
     public $role;
     public $created_at;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function emailExists() {
+    public function emailExists()
+    {
         $query = "SELECT id, username, password, role
                   FROM " . $this->table_name . "
                   WHERE email = ?
@@ -25,7 +28,7 @@ class User {
         $stmt->bindParam(1, $this->email);
         $stmt->execute();
 
-        if($stmt->rowCount() > 0) {
+        if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->id = $row['id'];
             $this->username = $row['username'];
@@ -36,9 +39,10 @@ class User {
         return false;
     }
 
-    public function create() {
+    public function create()
+    {
         $query = "INSERT INTO " . $this->table_name . "
-                  SET username=:username, email=:email, password=:password, role=:role";
+              SET username=:username, email=:email, password=:password, role=:role";
 
         $stmt = $this->conn->prepare($query);
 
@@ -54,10 +58,11 @@ class User {
         $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
         $stmt->bindParam(":password", $password_hash);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
+            // Obtener el ID del usuario recién insertado
+            $this->id = $this->conn->lastInsertId();
             return true;
         }
         return false;
     }
 }
-?>

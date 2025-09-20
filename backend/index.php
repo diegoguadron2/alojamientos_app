@@ -39,21 +39,30 @@ switch (true) {
             include 'controllers/AuthController.php';
         }
         break;
-        
+
     case $endpoint == 'accommodations' && empty($param1):
         include 'controllers/AccommodationController.php';
         break;
-        
+
     case $endpoint == 'accommodations' && is_numeric($param1) && empty($param2):
         $_GET['id'] = $param1;
         include 'controllers/AccommodationController.php';
         break;
-        
+
     case $endpoint == 'favorites' && $param1 == 'user' && is_numeric($param2):
         $_GET['user_id'] = $param2;
         include 'controllers/FavoriteController.php';
         break;
-        
+
+    case $endpoint == 'auth' && $param1 == 'register':
+        if ($method == 'POST') {
+            include 'controllers/UserController.php'; // o AuthController si elegiste opción 1
+        } else {
+            http_response_code(405);
+            echo json_encode(array("message" => "Método no permitido."));
+        }
+        break;
+
     case empty($endpoint):
         // Página principal - mostrar información de la API
         http_response_code(200);
@@ -66,6 +75,7 @@ switch (true) {
                 "GET /favorites/user/{id}" => "Obtener favoritos de un usuario"
             ),
             "endpoints_post" => array(
+                "POST /auth/register" => "Registro de nuevos usuarios", // ← Nueva línea
                 "POST /auth/login" => "Autenticación de usuarios",
                 "POST /accommodations" => "Crear un nuevo alojamiento",
                 "POST /favorites" => "Agregar a favoritos"
@@ -77,7 +87,7 @@ switch (true) {
             )
         ));
         break;
-        
+
     default:
         http_response_code(404);
         echo json_encode(array(
@@ -92,4 +102,3 @@ switch (true) {
         ));
         break;
 }
-?>

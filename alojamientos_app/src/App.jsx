@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"; // ← IMPORTACIÓN NECESARIA
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { Login, Register } from "./auth";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
@@ -8,6 +8,7 @@ import useAuth from "./hooks/useAuth";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const navigate = useNavigate();
 
   // Verificar autenticación al cargar la app
   useEffect(() => {
@@ -42,7 +43,10 @@ function App() {
           path="/login"
           element={
             !isAuthenticated ? (
-              <Login onLoginSuccess={handleLoginSuccess} />
+              <Login
+                onLoginSuccess={handleLoginSuccess}
+                onSwitchToRegister={() => navigate("/register")} // ← Agrega esta prop
+              />
             ) : (
               <Navigate to="/" replace />
             )
@@ -51,7 +55,13 @@ function App() {
         <Route
           path="/register"
           element={
-            !isAuthenticated ? <Register /> : <Navigate to="/" replace />
+            !isAuthenticated ? (
+              <Register
+                onSwitchToLogin={() => navigate("/login")} 
+              />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
         <Route

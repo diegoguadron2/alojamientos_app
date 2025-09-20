@@ -12,7 +12,7 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
     e.preventDefault();
     const result = await login(email, password);
     if (result.success) {
-      onLoginSuccess(result.user); // ← Esto notificará a App.jsx
+      onLoginSuccess(result.user);
     }
   };
 

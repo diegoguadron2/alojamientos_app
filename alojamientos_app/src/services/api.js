@@ -12,39 +12,47 @@ const api = axios.create({
 
 // Servicios de autenticación
 export const authService = {
-  login: (email, password) => 
+  login: (email, password) =>
     api.post('/auth/login', { email, password }),
-  
-  register: (userData) => 
+
+  register: (userData) =>
     api.post('/auth/register', userData)
 };
 
 // Servicios de alojamientos
 export const accommodationService = {
   getAll: () => api.get('/accommodations'),
-  
+
   getById: (id) => api.get(`/accommodations/${id}`),
-  
-  create: (accommodationData) => 
+
+  create: (accommodationData) =>
     api.post('/accommodations', accommodationData),
-  
-  update: (id, accommodationData) => 
+
+  update: (id, accommodationData) =>
     api.put('/accommodations', { id, ...accommodationData }),
-  
-  delete: (id) => 
+
+  delete: (id) =>
     api.delete('/accommodations', { data: { id } })
 };
 
 // Servicios de favoritos
 export const favoriteService = {
-  getByUser: (userId) => 
-    api.get(`/favorites/user/${userId}`),
-  
-  add: (userId, accommodationId) => 
-    api.post('/favorites', { user_id: userId, accommodation_id: accommodationId }),
-  
-  remove: (userId, accommodationId) => 
-    api.delete('/favorites', { data: { user_id: userId, accommodation_id: accommodationId } })
+  getByUser: (userId) =>
+    api.get(`/favorites/user/${userId}`), // ← Esta está bien
+
+  add: (userId, accommodationId) =>
+    api.post('/favorites', {
+      user_id: userId,
+      accommodation_id: accommodationId
+    }),
+
+  remove: (userId, accommodationId) =>
+    api.delete('/favorites', {
+      data: {
+        user_id: userId,
+        accommodation_id: accommodationId
+      }
+    })
 };
 
 export default api;

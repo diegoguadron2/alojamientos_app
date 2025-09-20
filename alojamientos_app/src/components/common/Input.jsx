@@ -8,7 +8,7 @@ const Input = ({ label, type = 'text', name, value, onChange, placeholder, error
       )}
       <input
         type={type}
-        name={name} // ← AÑADE ESTA LÍNEA
+        name={name} 
         value={value}
         onChange={onChange}
         placeholder={placeholder}

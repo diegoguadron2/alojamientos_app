@@ -24,8 +24,7 @@ switch($method) {
             $num = $stmt->rowCount();
             
             if($num > 0) {
-                $favorites_arr = array();
-                $favorites_arr["records"] = array();
+                $favorites_arr = array(); // ← Array directo, sin propiedad "records"
                 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     extract($row);
@@ -38,11 +37,11 @@ switch($method) {
                         "price_per_night" => $price_per_night,
                         "created_at" => $created_at
                     );
-                    array_push($favorites_arr["records"], $favorite_item);
+                    array_push($favorites_arr, $favorite_item); // ← Push directo al array
                 }
                 
                 http_response_code(200);
-                echo json_encode($favorites_arr);
+                echo json_encode($favorites_arr); // ← Devuelve [...]
             } else {
                 http_response_code(404);
                 echo json_encode(array("message" => "No se encontraron favoritos."));

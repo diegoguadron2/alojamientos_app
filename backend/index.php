@@ -54,6 +54,15 @@ switch (true) {
         include 'controllers/FavoriteController.php';
         break;
 
+    case $endpoint == 'favorites' && empty($param1):
+        if ($method == 'POST' || $method == 'DELETE') {
+            include 'controllers/FavoriteController.php';
+        } else {
+            http_response_code(405);
+            echo json_encode(array("message" => "Método no permitido."));
+        }
+        break;
+
     case $endpoint == 'auth' && $param1 == 'register':
         if ($method == 'POST') {
             include 'controllers/UserController.php'; // o AuthController si elegiste opción 1

@@ -1,34 +1,40 @@
-import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+
 const Header = () => {
   const navigate = useNavigate();
-  const { user, isAdmin } = useAuth();
+  
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userRole = localStorage.getItem("userRole");
+  
+  const isAdmin = () => {
+    return userRole === "admin";
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userRole");
-
     window.location.reload();
-
     navigate("/login");
   };
 
-  const goToHome = () => {
-    navigate("/");
-  };
-
-  const goToAdmin = () => {
-    navigate("/admin"); 
-  };
+  const goToHome = () => navigate("/");
+  const goToAdmin = () => navigate("/admin");
+  const goToFavorites = () => navigate("/favorites"); 
 
   return (
     <header className="bg-white shadow-md p-4 flex justify-between items-center">
       <div className="flex items-center space-x-4">
-        <button
-          onClick={goToHome}
-          className="text-2xl"
-        >
-          🏠
-        </button>
+        <button onClick={goToHome} className="text-2xl">🏠</button>
+
+        {user && (
+          <button
+            onClick={goToFavorites}
+            className="flex items-center text-pink-600 hover:text-pink-800"
+          >
+            <span className="text-xl">❤️</span>
+            <span className="ml-1">Favoritos</span>
+          </button>
+        )}
 
         {isAdmin() && (
           <button

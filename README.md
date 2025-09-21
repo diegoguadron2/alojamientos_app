@@ -26,10 +26,12 @@ A modern, elegant web application for managing and browsing accommodations with 
 - **Tailwind CSS** - Styling with custom dark theme
 - **React Router** - Navigation and routing
 - **Axios** - HTTP client for API requests
+
 <img width="1350" height="603" alt="administracion" src="https://github.com/user-attachments/assets/3d1074b7-a3c1-4e2c-af82-382b287aab06" />
+
 <img width="1286" height="602" alt="edicion" src="https://github.com/user-attachments/assets/aa9fb0a8-429b-47b1-8633-ca768501a853" />
+
 <img width="1361" height="668" alt="favoritos" src="https://github.com/user-attachments/assets/e1154467-737c-45ff-b83d-a8a37203232f" />
-<img width="1339" height="423" alt="base3" src="https://github.com/user-attachments/assets/409cb977-150b-4a60-a10e-de9021a15a09" />
 
 ### Backend
 - **PHP** - Server-side logic
